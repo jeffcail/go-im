@@ -11,12 +11,14 @@ type GlobalConfig struct {
 	AppGoroutines string `json:"app_goroutines"`
 	HTTPBind      string `json:"http_bind"`
 	Mysql         struct {
-		DbDsn string `json:"db_dsn"`
+		DbDsn       string `json:"db_dsn"`
+		MaxOpenConn int    `json:"max_open_conn"`
+		MaxIdleConn int    `json:"max_idle_conn"`
 	} `json:"mysql"`
 	Redis struct {
 		RedisAddr string `json:"redis_addr"`
 		Password  string `json:"password"`
-		RedisDb   string `json:"redis_db"`
+		RedisDb   int    `json:"redis_db"`
 	} `json:"redis"`
 	RabbitMQ struct {
 		Host     string `json:"host"`

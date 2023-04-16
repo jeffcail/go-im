@@ -3,8 +3,6 @@ package main
 import (
 	"flag"
 
-	"github.com/jeffcail/go-im/config"
-
 	"github.com/jeffcail/go-im/boot"
 )
 
@@ -14,7 +12,7 @@ var (
 
 func init() {
 	flag.Parse()
-	config.InitParse()
+	boot.Run()
 }
 
 func main() {

@@ -4,7 +4,9 @@ AppGoroutines: 100000
 HTTPBind: :8080
 
 Mysql:
-  DbDsn: root:123456@tcp(127.0.0.1:3306)/go-im?charset=utf8mb4
+  DbDsn: root:123456@tcp(127.0.0.1:3306)/go-im?charset=utf8mb4&parseTime=True&loc=Local
+  MaxOpenConn: 10000
+  MaxIdleConn: 1000
 
 Redis:
   RedisAddr: 127.0.0.1:7379

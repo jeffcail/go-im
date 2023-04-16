@@ -4,4 +4,8 @@
 # 技术栈
 ✔ gin
 
+✔ mysql8.0
+
+✔ redis
+
 ✔ viper
