@@ -11,3 +11,5 @@
 ✔ RabbitMQ
 
 ✔ viper
+
+✔ 日志zap

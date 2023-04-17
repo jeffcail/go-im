@@ -10,6 +10,9 @@ import (
 func Run() {
 	// 解析配置
 	config.InitParse()
+	// 初始化日志
+	logger := _init.InitLogger()
+	core.SetLogger(logger)
 	// 初始化数据库连接
 	db := _init.InitMysql()
 	core.SetMysql(db)
