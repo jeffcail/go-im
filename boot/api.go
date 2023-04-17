@@ -2,14 +2,17 @@ package boot
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/jeffcail/go-im/middlewares"
 	"github.com/jeffcail/go-im/router"
 )
 
 // ApiServer 启动http api 服务
 func ApiServer() {
-	imApi := gin.Default()
+	r := gin.Default()
 
-	router.RegisterApiRouter(imApi)
+	r.Use(middlewares.Recover)
 
-	imApi.Run(":8080")
+	router.RegisterApiRouter(r)
+
+	r.Run(":8080")
 }

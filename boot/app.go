@@ -4,6 +4,7 @@ import (
 	"github.com/jeffcail/go-im/config"
 	"github.com/jeffcail/go-im/core"
 	_init "github.com/jeffcail/go-im/init"
+	"github.com/jeffcail/go-im/pkg/pool"
 )
 
 // Run 项目启动初始化工作
@@ -22,4 +23,6 @@ func Run() {
 	// 初始化rabbitmq连接
 	mq := _init.InitRabbitMQ()
 	core.SetRabbitMQ(mq)
+	// 启动协程池管理
+	pool.BootGoroutinePool()
 }

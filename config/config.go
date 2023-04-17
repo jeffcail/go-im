@@ -1,6 +1,9 @@
 package config
 
 import (
+	"log"
+	"os"
+
 	"github.com/jeffcail/go-im/global"
 	"github.com/spf13/viper"
 )
@@ -8,7 +11,7 @@ import (
 type GlobalConfig struct {
 	AppName       string `json:"app_name"`
 	AppUrl        string `json:"app_url"`
-	AppGoroutines string `json:"app_goroutines"`
+	AppGoroutines int    `json:"app_goroutines"`
 	HTTPBind      string `json:"http_bind"`
 	Mysql         struct {
 		DbDsn       string `json:"db_dsn"`
@@ -20,6 +23,12 @@ type GlobalConfig struct {
 		Password  string `json:"password"`
 		RedisDb   int    `json:"redis_db"`
 	} `json:"redis"`
+	Email struct {
+		MailFrom       string `json:"mail_from"`
+		MailPassword   string `json:"mail_password"`
+		MailServer     string `json:"mail_server"`
+		MailServerPort string `json:"mail_server_port"`
+	} `json:"email"`
 	RabbitMQ struct {
 		Host     string `json:"host"`
 		Port     string `json:"port"`
@@ -47,5 +56,11 @@ func InitParse() {
 	err := viper.ReadInConfig()
 	global.CheckErr(err)
 	err = viper.Unmarshal(&Config)
+	Config.Email.MailFrom = os.Getenv("Mail163From")
+	Config.Email.MailPassword = os.Getenv("Mail163Pass")
+	if Config.Email.MailFrom == "" || Config.Email.MailPassword == "" {
+		log.Fatal("配置信息不全,请晚上邮箱相关配置信息")
+		os.Exit(1)
+	}
 	global.CheckErr(err)
 }

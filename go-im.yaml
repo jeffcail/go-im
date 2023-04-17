@@ -13,6 +13,13 @@ Redis:
   Password: 123456
   RedisDb: 0
 
+#email
+Email:
+  MailFrom:
+  MailPassword:
+  MailServer: smtp.163.com
+  MailServerPort: :465
+
 RabbitMQ:
   Host: 127.0.0.1
   Port: 5672
