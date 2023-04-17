@@ -13,3 +13,7 @@
 ✔ viper
 
 ✔ 日志zap
+
+✔ sm.ms 图床
+
+✔ websocket
