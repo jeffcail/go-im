@@ -96,6 +96,6 @@ func (a *AuthHandler) Registered(c *gin.Context) {
 		return
 	}
 
-	response.ToJsonResponse(response.Success, cast.ToString(err)).ToJson(c)
+	response.ToJsonResponse(response.Success, "注册成功").ToJson(c)
 	return
 }

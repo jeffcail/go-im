@@ -22,6 +22,7 @@ require (
 	github.com/go-xorm/xorm v0.7.9 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
+	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jeffcail/wildrocket v0.0.0-20230417031008-63753c17eb53 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect

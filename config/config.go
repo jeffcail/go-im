@@ -46,6 +46,11 @@ type GlobalConfig struct {
 		Expire string `json:"expire"`
 		SECRET string `json:"secret"`
 	} `json:"jwt"`
+	SmMs struct {
+		Name     string `json:"name"`
+		Password string `json:"password"`
+		Token    string `json:"token"`
+	} `json:"sm_ms"`
 }
 
 var Config *GlobalConfig
@@ -59,8 +64,13 @@ func InitParse() {
 	Config.Email.MailFrom = os.Getenv("Mail163From")
 	Config.Email.MailPassword = os.Getenv("Mail163Pass")
 	if Config.Email.MailFrom == "" || Config.Email.MailPassword == "" {
-		log.Fatal("配置信息不全,请晚上邮箱相关配置信息")
-		os.Exit(1)
+		log.Fatal("配置信息不全,请完善邮箱相关配置信息")
+	}
+	Config.SmMs.Name = os.Getenv("SMMSName")
+	Config.SmMs.Password = os.Getenv("SMMSPassword")
+	Config.SmMs.Token = os.Getenv("SMMSToken")
+	if Config.SmMs.Name == "" || Config.SmMs.Password == "" || Config.SmMs.Token == "" {
+		log.Fatal("配置信息不全,请完善sm.ms相关配置信息")
 	}
 	global.CheckErr(err)
 }
