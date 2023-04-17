@@ -8,4 +8,6 @@
 
 ✔ redis
 
+✔ RabbitMQ
+
 ✔ viper

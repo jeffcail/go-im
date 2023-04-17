@@ -14,7 +14,9 @@ func Run() {
 	db := _init.InitMysql()
 	core.SetMysql(db)
 	// 初始化redis连接
-
 	rdb := _init.InitRedis()
 	core.SetRedis(rdb)
+	// 初始化rabbitmq连接
+	mq := _init.InitRabbitMQ()
+	core.SetRabbitMQ(mq)
 }
