@@ -7,7 +7,7 @@ import (
 	model "github.com/jeffcail/go-im/internel/models"
 )
 
-// FindOneUserByName
+// FindOneUserByName 获取用户信息
 func FindOneUserByName(name string) (*model.ImUser, error) {
 	u := &model.ImUser{}
 	err := core.Db.Where("name = ?", name).Find(u).Error
@@ -17,6 +17,7 @@ func FindOneUserByName(name string) (*model.ImUser, error) {
 	return u, nil
 }
 
+// RegisteredService 用户注册
 func RegisteredService(email, name, password, avatar string) error {
 	u := &model.ImUser{
 		Name:     name,
@@ -29,4 +30,9 @@ func RegisteredService(email, name, password, avatar string) error {
 		return errors.New("注册账号失败")
 	}
 	return nil
+}
+
+// UpdateUserInfo 修改用户信息
+func UpdateUserInfo(user *model.ImUser) error {
+	return core.Db.Model(&model.ImUser{}).Where("name = ?", user.Name).Save(user).Error
 }

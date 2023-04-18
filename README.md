@@ -17,3 +17,5 @@
 ✔ sm.ms 图床
 
 ✔ websocket
+
+✔ jwt

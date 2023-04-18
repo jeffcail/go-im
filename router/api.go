@@ -22,10 +22,12 @@ func RegisterApiRouter(router *gin.Engine) {
 
 	apiRouter := router.Group("/api")
 	{
+		apiRouter.POST("/login", auth.Login)
 		apiRouter.GET("/send/register/email", auth.SendRegisterEmail) // send register email
 		apiRouter.POST("/register", auth.Registered)                  // user register
 
 		apiRouter.GET("/get/sm/api/token", sm.GetApiToken) // get sm.ms api token
+
 	}
 
 	router.GET("/", func(c *gin.Context) {

@@ -43,7 +43,7 @@ type GlobalConfig struct {
 		LocalTime string `json:"local_time"`
 	} `json:"logger"`
 	Jwt struct {
-		Expire string `json:"expire"`
+		Expire int64  `json:"expire"`
 		SECRET string `json:"secret"`
 	} `json:"jwt"`
 	SmMs struct {

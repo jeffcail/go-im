@@ -5,7 +5,7 @@ import (
 )
 
 type ImUser struct {
-	ID              uint64    `gorm:"column:id;primary_key;AUTO_INCREMENT"`
+	ID              int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
 	Name            string    `gorm:"column:name;NOT NULL"`
 	Email           string    `gorm:"column:email"`
 	EmailVerifiedAt time.Time `gorm:"column:email_verified_at"`

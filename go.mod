@@ -3,7 +3,10 @@ module github.com/jeffcail/go-im
 go 1.20
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/spf13/viper v1.15.0
 	github.com/streadway/amqp v1.0.0
+	go.uber.org/zap v1.21.0
 	gopkg.in/redis.v5 v5.2.9
 	gorm.io/gorm v1.25.0
 )
@@ -46,7 +49,6 @@ require (
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/spf13/viper v1.15.0 // indirect
 	github.com/subosito/gotenv v1.4.2 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
@@ -57,7 +59,6 @@ require (
 	go.mongodb.org/mongo-driver v1.11.4 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.8.0 // indirect
-	go.uber.org/zap v1.21.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.8.0 // indirect
 	golang.org/x/net v0.9.0 // indirect

@@ -33,7 +33,7 @@ Logger:
   Compress: true
   LocalTime: true
 Jwt:
-  Expire: 3600
+  Expire: 60
   SECRET: 90fc4956fb1d4f0f963d8cc2a3bf86e934234223423
 
 #SM.MS

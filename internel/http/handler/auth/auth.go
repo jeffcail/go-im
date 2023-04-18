@@ -4,6 +4,12 @@ import (
 	"fmt"
 	"time"
 
+	"go.uber.org/zap"
+
+	model "github.com/jeffcail/go-im/internel/models"
+
+	_jwt "github.com/jeffcail/go-im/pkg/jwt"
+
 	"github.com/spf13/cast"
 
 	"github.com/jeffcail/go-im/internel/http/services/auth"
@@ -17,7 +23,7 @@ import (
 	"github.com/jeffcail/go-im/utils"
 
 	"github.com/gin-gonic/gin"
-	input2 "github.com/jeffcail/go-im/internel/http/handler/input"
+	"github.com/jeffcail/go-im/internel/http/handler/inputOut"
 	"github.com/jeffcail/go-im/pkg/response"
 	"github.com/jeffcail/wildrocket/vali"
 )
@@ -28,7 +34,7 @@ type (
 
 // SendRegisterEmail 发送邮件验证
 func (a *AuthHandler) SendRegisterEmail(c *gin.Context) {
-	input := &input2.SendRegisterEmailInput{}
+	input := &inputOut.SendRegisterEmailInput{}
 	_ = c.BindJSON(input)
 	msg := vali.BindValidate(input)
 	if msg != "" {
@@ -63,7 +69,7 @@ func sendEmail(em string) {
 
 // Registered 注册
 func (a *AuthHandler) Registered(c *gin.Context) {
-	input := &input2.RegisteredInput{}
+	input := &inputOut.RegisteredInput{}
 	_ = c.Bind(input)
 	msg := vali.BindValidate(input)
 	if msg != "" {
@@ -98,4 +104,56 @@ func (a *AuthHandler) Registered(c *gin.Context) {
 
 	response.ToJsonResponse(response.Success, "注册成功").ToJson(c)
 	return
+}
+
+// Login
+func (a *AuthHandler) Login(c *gin.Context) {
+	input := &inputOut.LoginInput{}
+	_ = c.BindJSON(input)
+	msg := vali.BindValidate(input)
+	if msg != "" {
+		response.ToJsonResponse(response.Error, msg).ToJson(c)
+		return
+	}
+	u, err := auth.FindOneUserByName(input.Name)
+	if err != nil {
+		response.ToJsonResponse(response.Error, "登陆异常，请稍后再试！").ToJson(c)
+		return
+	}
+	if u.ID == 0 {
+		response.ToJsonResponse(response.Error, "您还未注册，请先注册！").ToJson(c)
+		return
+	}
+	if ok := utils.ComparePassword(u.Password, input.Password); !ok {
+		response.ToJsonResponse(response.Error, "密码不正确，请输入正确的密码！").ToJson(c)
+		return
+	}
+
+	// 下发token
+	token := _jwt.GenerateToken(u.ID, u.Name, u.Avatar, u.Email, input.ClientType)
+	data := userReturnInfo(token, u)
+	// 单点登陆，将别的登陆状态挤下线
+
+	// 修改用户最后登陆时间
+	u.LastLoginTime = time.Now()
+	if err = auth.UpdateUserInfo(u); err != nil {
+		core.ImLogger.Error(fmt.Sprintf("用户:%s登陆修改最后登陆时间失败", u.Name), zap.Error(err))
+	}
+
+	response.ToJsonResponse(response.Success, "登陆成功", data).ToJson(c)
+	return
+}
+
+func userReturnInfo(token string, user *model.ImUser) *inputOut.UserReturnInformation {
+	return &inputOut.UserReturnInformation{
+		ID:         user.ID,
+		Name:       user.Name,
+		Avatar:     user.Avatar,
+		Email:      user.Email,
+		Token:      token,
+		ExpireTime: config.Config.Jwt.Expire,
+		Sex:        user.Sex,
+		ClientType: user.ClientType,
+		Bio:        user.Bio,
+	}
 }

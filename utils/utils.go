@@ -24,6 +24,14 @@ func HashEncrypt(str string) (string, error) {
 	return string(hash), nil
 }
 
+// ComparePassword 验证码密码
+func ComparePassword(hashPwd, inputPwd string) bool {
+	if err := bcrypt.CompareHashAndPassword([]byte(hashPwd), []byte(inputPwd)); err != nil {
+		return false
+	}
+	return true
+}
+
 func Random(m int64) int {
 	max := big.NewInt(m)
 	i, err := rand2.Int(rand2.Reader, max)
